@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Internship_2_C_Sharp_Basics
 {
@@ -31,10 +32,15 @@ namespace Internship_2_C_Sharp_Basics
                 Console.WriteLine("9 - Uređivanje rednog broja pjesme");
                 Console.WriteLine("0 - Izlaz iz aplikacije");
 
+                var runProgramTime = 1;
                 var runProgram = true;
                 while (runProgram == true)
                 {
                     Console.WriteLine();
+                    if (runProgramTime > 1)
+                    {
+                        Console.WriteLine("Odaberite akciju:");
+                    }
                     var pick = int.Parse(Console.ReadLine());
                     switch (pick)
                     {
@@ -47,11 +53,13 @@ namespace Internship_2_C_Sharp_Basics
                                 if (exit == "DA")
                                 {
                                     runProgram = false;
+                                    runProgramTime = 1;
                                     exitDefinied = true;
                                 }
                                 else if (exit == "NE")
                                 {
                                     runProgram = false;
+                                    runProgramTime = 1;
                                     runMenu = true;
                                     exitDefinied = true;
                                 }
@@ -60,8 +68,10 @@ namespace Internship_2_C_Sharp_Basics
                                     Console.WriteLine("Molim ponovite unos!");
                                 }
                             }
+                            Console.WriteLine();
                             break;
                         case 1:
+                            Console.WriteLine("Izabrali ste ispis cijele playliste");
                             foreach (var song in dictionary)
                             {
                                 Console.WriteLine(song.Key.ToString()+')'+' '+song.Value);
@@ -123,6 +133,41 @@ namespace Internship_2_C_Sharp_Basics
                             }
                             dictionary.Add(lastSong + 1, newSong);
                             break;
+                        case 5:
+                            Console.WriteLine("Izabrali ste brisanje pjesme unosom rednog broja pjesme");
+                            var deleteSongDefinied = false;
+                            Console.WriteLine("Unesite broj pjesme koju želite izbrisati");
+                            var listOfKeys5 = dictionary.Keys.ToList();
+                            var listOfValues5 = dictionary.Values.ToList();
+                            dictionary.Clear();
+                            while (deleteSongDefinied == false)
+                            {
+                                var deleteSongNumber = int.Parse(Console.ReadLine());
+                                for (var i = 0; i < listOfKeys5.Count; i++)
+                                {
+                                    if (listOfKeys5[i] == deleteSongNumber)
+                                    {
+                                        listOfKeys5.Remove(listOfKeys5[i]);
+                                        listOfValues5.Remove(listOfValues5[i]);
+                                        Console.WriteLine("Pjesma uspješno izbrisana!");
+                                        listOfKeys5[i] = listOfKeys5[i] - 1;
+                                        deleteSongDefinied = true;
+                                    }
+                                    else if (listOfKeys5[i] > deleteSongNumber)
+                                    {
+                                        listOfKeys5[i] = listOfKeys5[i] - 1;
+                                    }
+                                }
+                                if (deleteSongDefinied == false)
+                                {
+                                    Console.WriteLine("Ne postoji pjesma pod tim brojem. Molim ponovite unos!");
+                                }
+                            }
+                            for (var i = 0; i < listOfKeys5.Count; i++)
+                            {
+                                dictionary.Add(listOfKeys5[i], listOfValues5[i]);
+                            }
+                            break;
                         case 7:
                             Console.WriteLine("Jeste li sigurni da želite izbrisati cijelu playlistu? DA/NE");
                             var deleteDefinied = false;
@@ -145,16 +190,45 @@ namespace Internship_2_C_Sharp_Basics
                                     Console.WriteLine("Molim ponovite unos!");
                                 }
                             }
+                            Console.WriteLine();
+                            break;
+                        case 8:
+                            Console.WriteLine("Izabrali ste uređivanje imena pjesme");
+                            Console.WriteLine("Unesite redni broj pjesme čije ime želite urediti");
+                            var songNumberDefinied = false;
+                            var listOfKeys8 = dictionary.Keys.ToList();
+                            var listOfValues8 = dictionary.Values.ToList();
+                            dictionary.Clear();
+                            while (songNumberDefinied == false)
+                            {
+                                var songNumber = int.Parse(Console.ReadLine());
+                                for (var i = 0; i < listOfKeys8.Count; i++)
+                                {
+                                    if (listOfKeys8[i] == songNumber)
+                                    {
+                                        Console.WriteLine("Unesi uređeno ime pjesme");
+                                        var editedSongName = Console.ReadLine();
+                                        listOfValues8[i] = editedSongName;
+                                        Console.WriteLine("Pjesma uspješno uređena!");
+                                        songNumberDefinied = true;
+                                    }
+                                }
+                                if (songNumberDefinied == false)
+                                {
+                                    Console.WriteLine("Ne postoji pjesma pod tim brojem. Molim ponovite unos!");
+                                }
+                            }
+                            for (var i = 0; i < listOfKeys8.Count; i++)
+                            {
+                                dictionary.Add(listOfKeys8[i], listOfValues8[i]);
+                            }
                             break;
                         default:
                             break;
                     }
+                    runProgramTime += 1;
                 }
-
             }
-        }
-
-        
-          
+        }    
     }
 }
