@@ -30,6 +30,7 @@ namespace Internship_2_C_Sharp_Basics
                 Console.WriteLine("7 - Brisanje cijele liste");
                 Console.WriteLine("8 - Uređivanje imena pjesme");
                 Console.WriteLine("9 - Uređivanje rednog broja pjesme");
+                Console.WriteLine("10 - Shuffle pjesama");
                 Console.WriteLine("0 - Izlaz iz aplikacije");
 
                 var runProgramTime = 1;
@@ -88,7 +89,7 @@ namespace Internship_2_C_Sharp_Basics
                                 {
                                     if (song.Key == num)
                                     {
-                                        Console.WriteLine(song.Value);
+                                        Console.WriteLine("Pjesma pod brojem " + num + " je " + song.Value);
                                         numDefinied = true;
                                     }
                                 }
@@ -109,7 +110,7 @@ namespace Internship_2_C_Sharp_Basics
                                 {
                                     if (song.Value == songName)
                                     {
-                                        Console.WriteLine(song.Key);
+                                        Console.WriteLine("Pjesma pod imenom " + songName + " je " + song.Key + " na playlisti");
                                         nameSongDefinied = true;
                                     }
                                 }
@@ -367,6 +368,35 @@ namespace Internship_2_C_Sharp_Basics
                                 }
                             }
                            
+                            break;
+                        case 10:
+                            Console.WriteLine("Izabrali ste shuffle pjesama");
+                            var listOfKeys10 = dictionary.Keys.ToList();
+                            var listOfValues10 = dictionary.Values.ToList();
+                            var shuffleOfSongs = false;
+                            Random random = new Random();
+                            Console.WriteLine("Ako niste sigurni u odluci, za povratak na izbornik unesite: izbornik");
+                            Console.WriteLine("Za nastavak unijeti bilo što");
+                            backToMenu = Console.ReadLine();
+                            if (backToMenu == "izbornik")
+                            {
+                                Console.WriteLine();
+                                shuffleOfSongs = true;
+                                runProgram = false;
+                                runMenu = true;
+                            }
+                            if (shuffleOfSongs == false)
+                            {
+                                shuffleOfSongs = true;
+                                dictionary.Clear();
+                                for (var i = 0; i < listOfKeys10.Count; i++)
+                                {
+                                    var randomValue = random.Next(0, listOfValues10.Count);
+                                    dictionary.Add(listOfKeys10[i], listOfValues10[randomValue]);
+                                    listOfValues10.Remove(listOfValues10[randomValue]);
+                                }
+                                Console.WriteLine("Pjesme su random ispremještane");
+                            }
                             break;
                         default:
                             Console.WriteLine("Molim ponovite unos");
